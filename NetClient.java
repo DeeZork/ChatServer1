@@ -65,7 +65,6 @@ public class NetClient extends JFrame implements KeyListener {
 				}
 			};
 		}.start();
-
 	}
 	public static void main(String[] args) {
 		new NetClient().setVisible(true);

@@ -12,16 +12,16 @@ public class Client implements Runnable {
     ChatServer server;
     int id;
 
-    public Client(Socket socket, ChatServer server,int id) {
+    public Client(Socket socket, ChatServer server, int id) {
         this.socket = socket;
         this.server = server;
-        this.id=id;
+        this.id = id;
         // запускаем поток
         new Thread(this).start();
     }
 
-    void receive(String message) {
-        out.println(message);
+    void receive(int id, String message) {
+        out.println(id+": "+message);
     }
 
     @Override
@@ -36,10 +36,10 @@ public class Client implements Runnable {
             out = new PrintStream(os);
 
             // читаем из сети и пишем в сеть
-            out.println("Welcome to Chat");
+            out.println("Welcome to Chat, your id - "+id);
             String input = in.nextLine();
             while (!input.equals("bye")) {
-                server.sendAll(input,id);
+                server.sendAll(input, id);
                 input = in.nextLine();
             }
             socket.close();

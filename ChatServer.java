@@ -16,7 +16,7 @@ public class ChatServer {
     void sendAll(String message, int id) {
         for (Client client : clients) {
             if (client.id != id)
-                client.receive(message);
+                client.receive(id, message);
         }
     }
 
