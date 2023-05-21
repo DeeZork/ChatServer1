@@ -10,10 +10,12 @@ public class Client implements Runnable {
     Scanner in;
     PrintStream out;
     ChatServer server;
+    int id;
 
-    public Client(Socket socket, ChatServer server) {
+    public Client(Socket socket, ChatServer server,int id) {
         this.socket = socket;
         this.server = server;
+        this.id=id;
         // запускаем поток
         new Thread(this).start();
     }
@@ -37,7 +39,7 @@ public class Client implements Runnable {
             out.println("Welcome to Chat");
             String input = in.nextLine();
             while (!input.equals("bye")) {
-                server.sendAll(input);
+                server.sendAll(input,id);
                 input = in.nextLine();
             }
             socket.close();

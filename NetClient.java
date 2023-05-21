@@ -21,7 +21,8 @@ public class NetClient extends JFrame implements KeyListener {
 
 	NetClient() {
 		// Создаем окно
-		super("Simple Chat client");
+
+		super("Chat client");
 		setSize(400, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

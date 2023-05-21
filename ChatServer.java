@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class ChatServer {
     ArrayList<Client> clients = new ArrayList<>();
+    int id;
     ServerSocket serverSocket;
 
     ChatServer() throws IOException {
@@ -12,9 +13,10 @@ public class ChatServer {
         serverSocket = new ServerSocket(1234);
     }
 
-    void sendAll(String message) {
+    void sendAll(String message, int id) {
         for (Client client : clients) {
-            client.receive(message);
+            if (client.id != id)
+                client.receive(message);
         }
     }
 
@@ -27,7 +29,7 @@ public class ChatServer {
                 socket = serverSocket.accept();
                 System.out.println("Client connected!");
                 // создаем клиента на своей стороне
-                clients.add(new Client(socket, this));
+                clients.add(new Client(socket, this, id++));
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
