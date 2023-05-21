@@ -4,14 +4,22 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ChatServer {
-    ArrayList<Client> clients=new ArrayList<>();
+    ArrayList<Client> clients = new ArrayList<>();
     ServerSocket serverSocket;
+
     ChatServer() throws IOException {
         // создаем серверный сокет на порту 1234
         serverSocket = new ServerSocket(1234);
     }
-    public void run(){
-        while(true) {
+
+    void sendAll(String message) {
+        for (Client client : clients) {
+            client.receive(message);
+        }
+    }
+
+    public void run() {
+        while (true) {
             System.out.println("Waiting...");
             Socket socket = null;
             try {
@@ -19,7 +27,7 @@ public class ChatServer {
                 socket = serverSocket.accept();
                 System.out.println("Client connected!");
                 // создаем клиента на своей стороне
-                clients.add(new Client(socket));
+                clients.add(new Client(socket, this));
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -27,7 +35,7 @@ public class ChatServer {
         }
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         try {
             new ChatServer().run();
         } catch (IOException e) {
