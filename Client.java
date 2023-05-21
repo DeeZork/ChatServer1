@@ -10,6 +10,8 @@ public class Client implements Runnable{
 
     public Client(Socket socket){
         this.socket = socket;
+        // запускаем поток
+        new Thread(this).start();
     }
     @Override
     public void run() {
